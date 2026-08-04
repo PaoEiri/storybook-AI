@@ -4,7 +4,6 @@
 ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?logo=streamlit&logoColor=white)
 ![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4o%20%7C%20gpt--image--1-412991?logo=openai&logoColor=white)
 ![Gemini](https://img.shields.io/badge/Google-Gemini-4285F4?logo=googlegemini&logoColor=white)
-![Hugging Face](https://img.shields.io/badge/Hugging%20Face-Inference%20API-FFD21E?logo=huggingface&logoColor=black)
 ![License](https://img.shields.io/badge/status-proyecto%20de%20portafolio-informational)
 
 Aplicación de **Generative UI** donde el dibujo de un niño se convierte en
