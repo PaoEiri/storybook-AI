@@ -7,9 +7,9 @@ reintenta con un prompt simplificado antes de rendirse.
 import urllib.parse
 import requests
 from .base import BaseImageProvider
+from prompts.loader import load_prompt
 
 BASE_URL = "https://image.pollinations.ai/prompt/"
-STYLE = ", children's illustrated storybook, soft watercolor style, warm golden light, whimsical"
 
 
 class PollinationsImageProvider(BaseImageProvider):
@@ -25,7 +25,7 @@ class PollinationsImageProvider(BaseImageProvider):
 
     def generate_image(self, prompt: str) -> bytes:
         # Intento 1: prompt completo
-        full_prompt = prompt + STYLE
+        full_prompt = f"{prompt}, {load_prompt('illustration_style.txt')}"
         try:
             return self._fetch(full_prompt)
         except requests.exceptions.HTTPError as e:

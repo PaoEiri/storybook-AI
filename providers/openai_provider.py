@@ -10,6 +10,7 @@ from typing import Generator
 from openai import OpenAI
 
 from .base import BaseLLMProvider, BaseImageProvider
+from prompts.loader import load_prompt
 
 
 class OpenAILLMProvider(BaseLLMProvider):
@@ -21,14 +22,7 @@ class OpenAILLMProvider(BaseLLMProvider):
 
     def analyze_image(self, image_bytes: bytes, mime_type: str = "image/png") -> str:
         b64_image = base64.b64encode(image_bytes).decode("utf-8")
-        prompt = (
-            "Eres un asistente que ayuda a crear cuentos infantiles. "
-            "Observa este dibujo hecho por un niño o niña y describe el "
-            "personaje que ves con detalle: tipo de criatura o persona, "
-            "colores, forma, rasgos distintivos, expresión, accesorios. "
-            "Escribe la descripción en 3-4 frases, en un tono cálido y "
-            "evocador, como si describieras al protagonista de un cuento."
-        )
+        prompt = load_prompt("character_analysis.txt")
 
         response = self.client.chat.completions.create(
             model=self.model_name,
@@ -69,10 +63,7 @@ class OpenAIImageProvider(BaseImageProvider):
         self.quality = quality  # respetar restricción de coste de la tarea
 
     def generate_image(self, prompt: str) -> bytes:
-        full_prompt = (
-            f"{prompt}, children's storybook illustration style, "
-            "soft colors, whimsical, warm lighting"
-        )
+        full_prompt = f"{prompt}, {load_prompt('illustration_style.txt')}"
         response = self.client.images.generate(
             model="gpt-image-1",
             prompt=full_prompt,

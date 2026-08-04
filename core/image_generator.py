@@ -9,50 +9,7 @@ Estrategia de consistencia visual:
 Esto garantiza que el personaje se vea igual en las 3 ilustraciones.
 """
 from providers.base import BaseImageProvider, BaseLLMProvider
-
-# Prompt para la PRIMERA ilustración: extrae descripción visual del personaje
-FIRST_ILLUSTRATION_PROMPT = """You are an art director for a children's illustrated storybook.
-
-Extract a precise visual description of the main character from this story fragment,
-then write a full image generation prompt for the FIRST illustration.
-
-CHARACTER DESCRIPTION FROM DRAWING ANALYSIS:
-{character_description}
-
-STORY SCENE:
-{scene_text}
-
-Write ONE image prompt in English with this EXACT structure:
-
-CHARACTER APPEARANCE: [describe every physical detail — body shape, size, colors, face, ears, tail, limbs, distinctive features. Be extremely specific so this character can be reproduced identically in future images]
-ACTION: [what is the character doing in this exact scene]
-SETTING: [environment, lighting, colors, background elements]
-STYLE: children's illustrated storybook, soft watercolor style, warm golden light, whimsical detailed background
-
-Output format: combine all into a single paragraph of 80-110 words. No labels. No explanations. Only the prompt.
-"""
-
-# Prompt para ilustraciones SIGUIENTES: reutiliza el prompt de personaje ya establecido
-SUBSEQUENT_ILLUSTRATION_PROMPT = """You are an art director for a children's illustrated storybook.
-
-CRITICAL: The main character MUST look IDENTICAL to the first illustration.
-Use this EXACT character description — do not change any physical detail:
-
-{character_visual_prompt}
-
-Now write a new image prompt for this new scene:
-
-STORY SCENE:
-{scene_text}
-
-Write ONE image prompt in English (80-110 words):
-- Start with the EXACT same character description as above (copy it verbatim)
-- Then add: what the character is doing in this new scene
-- Then add: the new setting (environment, lighting, background)
-- End with: children's illustrated storybook, soft watercolor style, warm golden light, whimsical detailed background, SAME CHARACTER as first illustration
-
-Output: single paragraph. No labels. No explanations. Only the prompt.
-"""
+from prompts.loader import load_prompt
 
 
 def build_first_prompt(
@@ -61,9 +18,11 @@ def build_first_prompt(
     scene_text: str,
 ) -> str:
     """Genera el prompt de la primera ilustración y lo devuelve completo."""
-    prompt = FIRST_ILLUSTRATION_PROMPT.format(
+    prompt = load_prompt(
+        "illustration_first.txt",
         character_description=character_description,
         scene_text=scene_text[:800],
+        style=load_prompt("illustration_style.txt"),
     )
     result = ""
     for chunk in llm_provider.stream_story([{"role": "user", "content": prompt}]):
@@ -77,9 +36,11 @@ def build_subsequent_prompt(
     scene_text: str,
 ) -> str:
     """Genera el prompt de una ilustración posterior, anclado al prompt de la primera."""
-    prompt = SUBSEQUENT_ILLUSTRATION_PROMPT.format(
+    prompt = load_prompt(
+        "illustration_subsequent.txt",
         character_visual_prompt=character_visual_prompt,
         scene_text=scene_text[:800],
+        style=load_prompt("illustration_style.txt"),
     )
     result = ""
     for chunk in llm_provider.stream_story([{"role": "user", "content": prompt}]):
@@ -127,10 +88,11 @@ def generate_illustration(
                 llm_provider, character_description, full_scene
             )
     else:
-        final_prompt = (
-            f"{character_description}. Scene: {full_scene[:400]}. "
-            "children's illustrated storybook, soft watercolor style, "
-            "warm golden light, whimsical detailed background"
+        final_prompt = load_prompt(
+            "illustration_fallback.txt",
+            character_description=character_description,
+            scene=full_scene[:400],
+            style=load_prompt("illustration_style.txt"),
         )
 
     img_bytes = image_provider.generate_image(final_prompt)

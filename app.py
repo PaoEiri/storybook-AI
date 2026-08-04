@@ -16,6 +16,7 @@ from core.checkpoint_controller import CheckpointController
 from core import story_generator, image_generator
 from utils.image_utils import validate_and_prepare_image, bytes_to_pil
 from utils.stream_utils import render_stream_and_collect
+from prompts.loader import load_prompt
 
 load_dotenv()
 
@@ -508,17 +509,10 @@ def generate_checkpoint_question(llm_provider, story_text: str, character_descri
     basada en el punto de tensión donde terminó el fragmento de historia.
     Devuelve (pregunta, opción_A, opción_B).
     """
-    prompt = (
-        f"El personaje es: {character_description}\n\n"
-        f"El cuento ha llegado a este punto:\n{story_text[-600:]}\n\n"
-        "Genera una pregunta narrativa emocionante con DOS opciones concretas para que "
-        "el lector elija cómo continúa la historia. "
-        "La pregunta debe ser específica al momento de la historia, no genérica. "
-        "Ejemplo: '¿Debería el dragoncito entrar al bosque oscuro o seguir el río brillante?'\n\n"
-        "Responde EXACTAMENTE en este formato (3 líneas, sin nada más):\n"
-        "PREGUNTA: [pregunta aquí]\n"
-        "A: [opción A aquí]\n"
-        "B: [opción B aquí]"
+    prompt = load_prompt(
+        "checkpoint_question.txt",
+        character_description=character_description,
+        story_text=story_text[-600:],
     )
     raw = ""
     for chunk in llm_provider.stream_story([{"role": "user", "content": prompt}]):
@@ -702,14 +696,9 @@ if st.session_state.stage == "choose_opening":
     # Generar 3 opciones de inicio si no existen aún
     if not st.session_state.story_options:
         with st.spinner("Imaginando posibles aventuras..."):
-            options_prompt = (
-                f"El personaje es: {st.session_state.character_description}\n\n"
-                "Genera exactamente 2 frases de inicio para un libro de cuentos ilustrado. "
-                "Cada una en un escenario completamente distinto y mágico. "
-                "El tono debe ser poético y evocador, como el inicio de un libro clásico para niños. "
-                "Devuelve SOLO las 2 opciones numeradas así:\n"
-                "1. [frase]\n2. [frase]\n"
-                "Una línea por opción, en español."
+            options_prompt = load_prompt(
+                "opening_options.txt",
+                character_description=st.session_state.character_description,
             )
             raw = ""
             for chunk in st.session_state.llm_provider.stream_story([

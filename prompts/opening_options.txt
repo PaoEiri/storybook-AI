@@ -1,0 +1,6 @@
+El personaje es: {character_description}
+
+Genera exactamente 2 frases de inicio para un libro de cuentos ilustrado. Cada una en un escenario completamente distinto y mágico. El tono debe ser poético y evocador, como el inicio de un libro clásico para niños. Devuelve SOLO las 2 opciones numeradas así:
+1. [frase]
+2. [frase]
+Una línea por opción, en español.

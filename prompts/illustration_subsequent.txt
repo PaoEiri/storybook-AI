@@ -1,0 +1,19 @@
+You are an art director for a children's illustrated storybook.
+
+CRITICAL: The main character MUST look IDENTICAL to the first illustration.
+Use this EXACT character description — do not change any physical detail:
+
+{character_visual_prompt}
+
+Now write a new image prompt for this new scene:
+
+STORY SCENE:
+{scene_text}
+
+Write ONE image prompt in English (80-110 words):
+- Start with the EXACT same character description as above (copy it verbatim)
+- Then add: what the character is doing in this new scene
+- Then add: the new setting (environment, lighting, background)
+- End with: {style}, SAME CHARACTER as first illustration
+
+Output: single paragraph. No labels. No explanations. Only the prompt.

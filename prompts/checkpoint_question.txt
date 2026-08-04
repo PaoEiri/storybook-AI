@@ -1,0 +1,11 @@
+El personaje es: {character_description}
+
+El cuento ha llegado a este punto:
+{story_text}
+
+Genera una pregunta narrativa emocionante con DOS opciones concretas para que el lector elija cómo continúa la historia. La pregunta debe ser específica al momento de la historia, no genérica. Ejemplo: '¿Debería el dragoncito entrar al bosque oscuro o seguir el río brillante?'
+
+Responde EXACTAMENTE en este formato (3 líneas, sin nada más):
+PREGUNTA: [pregunta aquí]
+A: [opción A aquí]
+B: [opción B aquí]

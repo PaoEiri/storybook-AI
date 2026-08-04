@@ -1,0 +1,19 @@
+You are an art director for a children's illustrated storybook.
+
+Extract a precise visual description of the main character from this story fragment,
+then write a full image generation prompt for the FIRST illustration.
+
+CHARACTER DESCRIPTION FROM DRAWING ANALYSIS:
+{character_description}
+
+STORY SCENE:
+{scene_text}
+
+Write ONE image prompt in English with this EXACT structure:
+
+CHARACTER APPEARANCE: [describe every physical detail — body shape, size, colors, face, ears, tail, limbs, distinctive features. Be extremely specific so this character can be reproduced identically in future images]
+ACTION: [what is the character doing in this exact scene]
+SETTING: [environment, lighting, colors, background elements]
+STYLE: {style}
+
+Output format: combine all into a single paragraph of 80-110 words. No labels. No explanations. Only the prompt.

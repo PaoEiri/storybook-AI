@@ -9,6 +9,7 @@ import google.generativeai as genai
 from google.api_core.exceptions import ResourceExhausted, TooManyRequests
 
 from .base import BaseLLMProvider
+from prompts.loader import load_prompt
 
 
 class GeminiQuotaError(Exception):
@@ -45,15 +46,7 @@ class GeminiProvider(BaseLLMProvider):
 
     @_wrap_quota
     def analyze_image(self, image_bytes: bytes, mime_type: str = "image/png") -> str:
-        prompt = (
-            "Eres un asistente que ayuda a crear cuentos infantiles. "
-            "Observa este dibujo hecho por un niño o niña y describe el "
-            "personaje que ves con detalle: tipo de criatura o persona, "
-            "colores, forma, rasgos distintivos, expresión, accesorios. "
-            "Escribe la descripción en 3-4 frases, en un tono cálido y "
-            "evocador, como si describieras al protagonista de un cuento. "
-            "No inventes un nombre todavía, solo describe lo que ves."
-        )
+        prompt = load_prompt("character_analysis.txt")
         image_part = {"mime_type": mime_type, "data": image_bytes}
         response = self.model.generate_content([prompt, image_part])
         return response.text.strip()

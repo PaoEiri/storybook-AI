@@ -7,16 +7,15 @@ Esto es lo que garantiza la COHERENCIA narrativa: cada llamada al LLM
 recibe todo el contexto previo, nunca solo el último fragmento.
 """
 
-from pathlib import Path
-
-PROMPTS_DIR = Path(__file__).parent.parent / "prompts"
+from prompts.loader import load_prompt
 
 
 class ContextManager:
     def __init__(self, character_description: str):
         self.character_description = character_description
-        system_template = (PROMPTS_DIR / "story_system.txt").read_text(encoding="utf-8")
-        system_prompt = system_template.format(character_description=character_description)
+        system_prompt = load_prompt(
+            "story_system.txt", character_description=character_description
+        )
 
         self.messages: list[dict] = [
             {"role": "system", "content": system_prompt}
