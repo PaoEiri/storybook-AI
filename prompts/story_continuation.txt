@@ -1,0 +1,15 @@
+El lector ha decidido: "{user_choice}"
+
+Continúa el libro de cuentos desde donde quedó, desarrollando esa elección.
+
+IMPORTANTE: el personaje debe tener exactamente los mismos rasgos físicos que
+al inicio — mismos colores, misma forma, mismos detalles. No cambies su apariencia.
+
+Escribe la siguiente página del libro: avanza la trama, muestra una emoción o
+descubrimiento nuevo, pinta el escenario con detalles visuales ricos.
+
+Si NO es el último turno: termina en un nuevo punto de tensión o decisión
+(sin formular la pregunta; el sistema la añade).
+
+Si ES el último turno antes del cierre: deja la historia en el momento de
+máxima emoción, a punto de resolverse.

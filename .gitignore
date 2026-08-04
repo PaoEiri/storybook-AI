@@ -1,0 +1,23 @@
+# Entornos virtuales
+venv/
+.venv/
+env/
+
+# Variables de entorno (contiene API keys)
+.env
+
+# Cachés de Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Streamlit
+.streamlit/
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+
+# Archivos del enunciado / entrega, no forman parte del código
+tarea challenge.zip
