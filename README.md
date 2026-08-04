@@ -12,7 +12,7 @@ streaming e ilustraciones generadas en momentos clave de la historia.
 
 ---
 
-## 🎯 Resumen 
+## Resumen 
 
 Proyecto full-stack de IA generativa construido para demostrar cómo diseñar
 un producto de IA **listo para producción**, no solo un notebook con una
