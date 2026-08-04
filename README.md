@@ -61,6 +61,12 @@ Gemini · Hugging Face Inference API · Docker · uv/pip.
 La aplicación usa **como máximo 3 imágenes** por historia para mantener
 los costes bajo control.
 
+## Capturas
+
+| Subida del dibujo | Historia interactiva |
+|---|---|
+| ![Pantalla de subida del dibujo](images/pantalla1.png) | ![Historia generada con ilustración y opciones](images/pantalla2.png) |
+
 ## Arquitectura
 
 El proyecto sigue una arquitectura por capas con **inversión de
